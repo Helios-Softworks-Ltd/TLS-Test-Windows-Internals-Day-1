@@ -54,19 +54,6 @@ ntdll has no dependencies of its own, so it can be loaded into processes very ea
 
 ### Before we hit the decompile
 
-Two things to have in your head first, otherwise the function looks worse than it is.
-
-**The `RTL_BITMAP` struct**
-
-```c
-typedef struct _RTL_BITMAP {
-    ULONG  SizeOfBitMap;   // number of bits
-    PULONG Buffer;         // pointer to the bit array
-} RTL_BITMAP;
-```
-
-The decompiler is going to show things like `TlsBitmap->Buffer & 4` as if `Buffer` is an integer. It's not, it's a pointer. Once you mentally re-type it, the weird arithmetic becomes alignment checks.
-
 **The two-tier TLS layout**
 
 Windows gives each thread a small fast array of TLS slots and a larger lazy one:
